@@ -38,29 +38,31 @@ app.use(
 );
 app.use(express.raw({ verify: rawBodySaver, type: "*/*", limit: "50mb" }));
 
-const whitelist = ["https://localhost:3000", "http://localhost:3000"];
+app.use(cors());
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      // allow requests with no origin
-      // (like mobile apps or curl requests)
-      if (!origin) return callback(null, true);
+// const whitelist = ["https://localhost:3000", "http://localhost:3000"];
 
-      if (whitelist.indexOf(origin) === -1) {
-        return callback(
-          new Error(
-            "The CORS policy for this site does not allow access from the specified Origin."
-          ),
-          false
-        );
-      }
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       // allow requests with no origin
+//       // (like mobile apps or curl requests)
+//       if (!origin) return callback(null, true);
 
-      return callback(null, true);
-    },
-    exposedHeaders: "x-access-token"
-  })
-);
+//       if (whitelist.indexOf(origin) === -1) {
+//         return callback(
+//           new Error(
+//             "The CORS policy for this site does not allow access from the specified Origin."
+//           ),
+//           false
+//         );
+//       }
+
+//       return callback(null, true);
+//     },
+//     exposedHeaders: "x-access-token"
+//   })
+// );
 
 const users = require("./src/api/v1/users");
 const products = require("./src/api/v1/products");
